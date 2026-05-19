@@ -15,6 +15,21 @@ const RECONNECT_MS = 15_000      // poll for Discord every 15s when disconnected
 const ts = () => new Date().toLocaleTimeString()
 const log = (msg) => console.log(`[${ts()}] ${msg}`)
 
+// Discord asset keys — must match what's uploaded under
+// Discord Developer Portal → Rich Presence → Art Assets.
+const CLAWDS = [
+  'clawd',
+  'clawd-coffee',
+  'clawd-dizzy',
+  'clawd-happy',
+  'clawd-headphones',
+  'clawd-heart',
+  'clawd-lightbulb',
+  'clawd-magnifier',
+  'clawd-skateboard',
+  'clawd-wand',
+]
+
 let lastVerb = null
 function pickVerb() {
   let v
@@ -23,17 +38,27 @@ function pickVerb() {
   return v
 }
 
+let lastClawd = null
+function pickClawd() {
+  let c
+  do { c = CLAWDS[Math.floor(Math.random() * CLAWDS.length)] } while (c === lastClawd)
+  lastClawd = c
+  return c
+}
+
 let client = null
 let activityTimer = null
 let reconnectTimer = null
 let connected = false
 let startedAt = Date.now()
 let currentVerb = null
+let currentClawd = null
 let dotIndex = 0
 
 function startActivity() {
   startedAt = Date.now()
   currentVerb = pickVerb()
+  currentClawd = pickClawd()
   dotIndex = 0
 
   const tick = () => {
@@ -41,8 +66,8 @@ function startActivity() {
     client?.user?.setActivity({
       details: `${currentVerb}${dots}`,
       state: 'with Claude',
-      largeImageKey: 'claude_logo',
-      largeImageText: 'Claude',
+      largeImageKey: currentClawd,
+      largeImageText: 'Clawd',
       startTimestamp: startedAt,
       buttons: [{ label: 'claude.com', url: 'https://claude.com' }],
     }).catch(err => {
@@ -54,6 +79,7 @@ function startActivity() {
     if (dotIndex >= DOT_FRAMES) {
       dotIndex = 0
       currentVerb = pickVerb()
+      currentClawd = pickClawd()
     }
   }
 

@@ -7,8 +7,7 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/node</string>
-        <string>/Users/cuis/Code/Personal/discord-rich-presence/src/index.js</string>
+        <string>/Users/cuis/Code/Personal/discord-rich-presence/Clauding.app/Contents/MacOS/Clauding</string>
     </array>
 
     <key>WorkingDirectory</key>
