@@ -1,0 +1,182 @@
+[
+  {
+    "file": "clawd.png",
+    "name": "Clawd",
+    "uuid": "5719926a-04ae-4afb-9925-f1f4521d38ce",
+    "variant": "original",
+    "width": 144,
+    "height": 116,
+    "bytes": 505
+  },
+  {
+    "file": "ultrathink.png",
+    "name": "ultrathink",
+    "uuid": "0006ba04-0f46-4c86-930b-1b41a9480f14",
+    "variant": "original",
+    "width": 1699,
+    "height": 234,
+    "bytes": 18656
+  },
+  {
+    "file": "clawd-happy.png",
+    "name": "Clawd happy",
+    "uuid": "be75b541-e429-4b61-a058-6a04bc35f712",
+    "variant": "original",
+    "width": 132,
+    "height": 104,
+    "bytes": 980
+  },
+  {
+    "file": "vibing-die-cut.png",
+    "name": "Vibing",
+    "uuid": "c6e41ee6-4500-403f-a36c-3e6e72596e3a",
+    "variant": "original",
+    "width": 263,
+    "height": 49,
+    "bytes": 4025
+  },
+  {
+    "file": "vibing-holographic.png",
+    "name": "Vibing",
+    "uuid": "d85490fc-cd48-4248-b208-0bda8dad0e59",
+    "variant": "original",
+    "width": 263,
+    "height": 49,
+    "bytes": 4025
+  },
+  {
+    "file": "clawd-shiny.png",
+    "name": "Clawd shiny",
+    "uuid": "1c69d7fd-a6de-42a8-99be-3edc7b32c8f1",
+    "variant": "original",
+    "width": 144,
+    "height": 116,
+    "bytes": 505
+  },
+  {
+    "file": "claudecode.png",
+    "name": "claudecode",
+    "uuid": "1a18c149-6820-437c-83a3-4053259f28d5",
+    "variant": "original",
+    "width": 847,
+    "height": 95,
+    "bytes": 11309
+  },
+  {
+    "file": "clawd-coffee.png",
+    "name": "Clawd Coffee",
+    "uuid": "a751fc7b-1ef4-4ae6-9ae4-f0a92e428c33",
+    "variant": "large",
+    "width": 600,
+    "height": 355,
+    "bytes": 23508
+  },
+  {
+    "file": "reticulating.png",
+    "name": "reticulating",
+    "uuid": "3133e32f-64d5-48ee-9215-be6453365d8b",
+    "variant": "original",
+    "width": 480,
+    "height": 102,
+    "bytes": 5992
+  },
+  {
+    "file": "shipping.png",
+    "name": "Shipping",
+    "uuid": "4296af64-9d1c-4e87-889f-e5397b680e4a",
+    "variant": "original",
+    "width": 320,
+    "height": 49,
+    "bytes": 4505
+  },
+  {
+    "file": "clawd-heart.png",
+    "name": "clawd heart",
+    "uuid": "d3c8ea82-59f0-4606-97fa-88acd0bf21a0",
+    "variant": "large",
+    "width": 600,
+    "height": 456,
+    "bytes": 29869
+  },
+  {
+    "file": "clawd-headphones.png",
+    "name": "Clawd Headphones",
+    "uuid": "d683c1c3-a865-4797-a5d3-7b1f82b90e86",
+    "variant": "large",
+    "width": 600,
+    "height": 538,
+    "bytes": 33477
+  },
+  {
+    "file": "baking.png",
+    "name": "Baking",
+    "uuid": "32774d7b-adab-48ca-8fc4-18fb0b0ec1c2",
+    "variant": "original",
+    "width": 263,
+    "height": 49,
+    "bytes": 4162
+  },
+  {
+    "file": "clawd-wand.png",
+    "name": "Clawd Wand",
+    "uuid": "297554b5-c858-4e1d-8c96-86eb18496131",
+    "variant": "large",
+    "width": 600,
+    "height": 312,
+    "bytes": 33114
+  },
+  {
+    "file": "manifesting.png",
+    "name": "Manifesting",
+    "uuid": "7c5cd395-b662-440f-a668-bf9052c8aafc",
+    "variant": "original",
+    "width": 450,
+    "height": 102,
+    "bytes": 6264
+  },
+  {
+    "file": "clawd-skateboard.png",
+    "name": "Clawd Skateboard",
+    "uuid": "298ed85d-dfc2-497d-a7c1-0bef98f77c02",
+    "variant": "large",
+    "width": 596,
+    "height": 600,
+    "bytes": 50462
+  },
+  {
+    "file": "clawd-wave.png",
+    "name": "Clawd wave",
+    "uuid": "f1ec9028-203f-4d6f-a360-5eea91e9723e",
+    "variant": "original",
+    "width": 1200,
+    "height": 1200,
+    "bytes": 18703
+  },
+  {
+    "file": "clawd-lightbulb.png",
+    "name": "Clawd Lightbulb",
+    "uuid": "966c86c2-9273-4064-9951-ab56fecd27bb",
+    "variant": "large",
+    "width": 409,
+    "height": 600,
+    "bytes": 31381
+  },
+  {
+    "file": "clawd-dizzy.png",
+    "name": "Clawd Dizzy",
+    "uuid": "5df191cb-99cf-421a-b5ef-818977b487b8",
+    "variant": "large",
+    "width": 600,
+    "height": 413,
+    "bytes": 23966
+  },
+  {
+    "file": "clawd-magnifier.png",
+    "name": "Clawd Magnifier",
+    "uuid": "b604152e-1a17-444d-846e-c0fe257bda95",
+    "variant": "large",
+    "width": 600,
+    "height": 542,
+    "bytes": 39888
+  }
+]

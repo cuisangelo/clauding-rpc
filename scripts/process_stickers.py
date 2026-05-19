@@ -5,9 +5,12 @@ from PIL import Image
 from collections import deque
 from pathlib import Path
 
-SRC = Path(__file__).parent.parent / 'assets' / 'stickers'
-OUT = SRC / 'processed'
+SRC = Path(__file__).parent.parent / 'assets' / 'stickers' / 'originals'
+OUT = Path(__file__).parent.parent / 'assets' / 'stickers' / 'processed'
 OUT.mkdir(exist_ok=True)
+
+# clawd-shiny is byte-identical to clawd; clawd-wave is a broken die-cut mockup.
+SKIP = {'clawd-shiny.png', 'clawd-wave.png'}
 
 TARGET_SIZE = 1024
 PADDING_PCT = 0.05          # 5% transparent margin inside the final 1024 canvas
@@ -113,7 +116,7 @@ def normalize_to_square(im: Image.Image) -> Image.Image:
 
 
 def main():
-    files = sorted(SRC.glob('clawd*.png'))
+    files = [f for f in sorted(SRC.glob('clawd*.png')) if f.name not in SKIP]
     print(f"Processing {len(files)} stickers → {OUT}\n")
     for src in files:
         im = Image.open(src)
