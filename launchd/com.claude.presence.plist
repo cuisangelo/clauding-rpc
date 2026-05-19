@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.claude.presence</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/node</string>
+        <string>/Users/cuis/Code/Personal/discord-rich-presence/src/index.js</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/cuis/Code/Personal/discord-rich-presence</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/cuis/Code/Personal/discord-rich-presence/launchd.out.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/cuis/Code/Personal/discord-rich-presence/launchd.err.log</string>
+</dict>
+</plist>
