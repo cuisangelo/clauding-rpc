@@ -1,6 +1,8 @@
 # Clauding
 
-Discord Rich Presence with Claude Code-style spinner verbs and **Clawd** (the official Claude Code mascot) rotating in your profile — active only while VSCode or Cursor is open.
+> ⚠️ **Unofficial fan-made extension.** Not affiliated with, endorsed by, or sponsored by Anthropic. Clawd, Claude, and related artwork are property of [Anthropic](https://www.anthropic.com); this project uses them under fair use for non-commercial personal projects.
+
+Discord Rich Presence with Claude Code-style spinner verbs and **Clawd** (the Claude Code mascot) rotating in your profile — active only while VSCode or Cursor is open.
 
 ```
 ┌─────────────────────────────────────┐

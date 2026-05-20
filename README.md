@@ -2,6 +2,8 @@
 
 > Discord Rich Presence personal que muestra a Claude trabajando — con verbos rotando estilo Claude Code y a **Clawd** (la mascota oficial de Claude Code) cambiando cada 30 segundos.
 
+> ⚠️ **Proyecto no oficial, hecho por fans.** No afiliado a Anthropic. Clawd, Claude y el artwork son propiedad de [Anthropic](https://www.anthropic.com); este repo los usa bajo fair use para uso personal no comercial.
+
 ```
 ┌─────────────────────────────────────┐
 │  Playing Clauding                   │
