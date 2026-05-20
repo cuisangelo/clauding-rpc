@@ -84,8 +84,8 @@ Si vas por el daemon standalone, o querés usar tu propia Discord App con la ext
 #### 1. Clonar y compilar
 
 ```bash
-git clone https://github.com/cuisangelo/discord-rich-presence.git
-cd discord-rich-presence
+git clone https://github.com/cuisangelo/clauding-rpc.git
+cd clauding-rpc
 pnpm install
 pnpm build
 ```

@@ -9,11 +9,11 @@
   "icon": "icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cuisangelo/discord-rich-presence.git",
+    "url": "https://github.com/cuisangelo/clauding-rpc.git",
     "directory": "packages/extension"
   },
-  "homepage": "https://github.com/cuisangelo/discord-rich-presence#readme",
-  "bugs": "https://github.com/cuisangelo/discord-rich-presence/issues",
+  "homepage": "https://github.com/cuisangelo/clauding-rpc#readme",
+  "bugs": "https://github.com/cuisangelo/clauding-rpc/issues",
   "categories": ["Other"],
   "keywords": ["discord", "rich presence", "claude", "clawd", "presence"],
   "engines": {

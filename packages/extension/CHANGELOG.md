@@ -19,4 +19,4 @@ This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Notes
 
-This is the first public release. The extension is part of a [pnpm monorepo](https://github.com/cuisangelo/discord-rich-presence) that also ships a standalone macOS daemon for users who want Rich Presence active outside of VSCode/Cursor too.
+This is the first public release. The extension is part of a [pnpm monorepo](https://github.com/cuisangelo/clauding-rpc) that also ships a standalone macOS daemon for users who want Rich Presence active outside of VSCode/Cursor too.

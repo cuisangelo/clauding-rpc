@@ -1,3 +1,3 @@
 #!/bin/zsh
-cd /Users/cuis/Code/Personal/discord-rich-presence
+cd /Users/cuis/Code/Personal/clauding-rpc
 exec /opt/homebrew/bin/node packages/daemon/dist/index.js

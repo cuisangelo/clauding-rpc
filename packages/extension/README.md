@@ -59,7 +59,7 @@ The default works out of the box, but if you want to count Clauding usage under 
 
 1. Create an Application at <https://discord.com/developers/applications> (Discord blocks "Claude" as a name; "Clauding" works).
 2. Copy the **Application ID** from *General Information*.
-3. Upload your assets under **Rich Presence → Art Assets** with the key names listed in the [main repo README](https://github.com/cuisangelo/discord-rich-presence#3-subir-los-assets-a-discord).
+3. Upload your assets under **Rich Presence → Art Assets** with the key names listed in the [main repo README](https://github.com/cuisangelo/clauding-rpc#3-subir-los-assets-a-discord).
 4. In VSCode/Cursor settings, set `clauding.discordClientId` to your Application ID.
 
 ## Troubleshooting
@@ -78,7 +78,7 @@ The default works out of the box, but if you want to count Clauding usage under 
 
 ## Companion standalone daemon
 
-This extension is part of a larger project that also ships a standalone macOS daemon (active even when VSCode/Cursor is closed). See the [full repo](https://github.com/cuisangelo/discord-rich-presence) for both setup paths.
+This extension is part of a larger project that also ships a standalone macOS daemon (active even when VSCode/Cursor is closed). See the [full repo](https://github.com/cuisangelo/clauding-rpc) for both setup paths.
 
 ## Credits
 

@@ -7,11 +7,11 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/cuis/Code/Personal/discord-rich-presence/Clauding.app/Contents/MacOS/Clauding</string>
+        <string>/Users/cuis/Code/Personal/clauding-rpc/Clauding.app/Contents/MacOS/Clauding</string>
     </array>
 
     <key>WorkingDirectory</key>
-    <string>/Users/cuis/Code/Personal/discord-rich-presence</string>
+    <string>/Users/cuis/Code/Personal/clauding-rpc</string>
 
     <key>RunAtLoad</key>
     <true/>
@@ -26,9 +26,9 @@
     <integer>30</integer>
 
     <key>StandardOutPath</key>
-    <string>/Users/cuis/Code/Personal/discord-rich-presence/launchd.out.log</string>
+    <string>/Users/cuis/Code/Personal/clauding-rpc/launchd.out.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/Users/cuis/Code/Personal/discord-rich-presence/launchd.err.log</string>
+    <string>/Users/cuis/Code/Personal/clauding-rpc/launchd.err.log</string>
 </dict>
 </plist>
