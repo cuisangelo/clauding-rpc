@@ -30,10 +30,6 @@ export interface PresenceOptions {
   stateText?: string
   /** Tooltip for the large image. Defaults to "Clawd". */
   largeImageText?: string
-  /** Button label. Defaults to `null` (no button). Set a string to show one. */
-  buttonLabel?: string | null
-  /** Button URL. Only used when buttonLabel is set. */
-  buttonUrl?: string
   /** Logger. Defaults to console.log with timestamp prefix. */
   log?: (msg: string) => void
   /** Called whenever the lifecycle state changes. Useful for status-bar UIs. */
@@ -57,8 +53,6 @@ export class ClaudingPresence {
   private readonly clawds: readonly string[]
   private readonly stateText: string
   private readonly largeImageText: string
-  private readonly buttonLabel: string | null
-  private readonly buttonUrl: string
   private readonly log: (msg: string) => void
   private readonly onStateChange: (state: PresenceState) => void
 
@@ -85,8 +79,6 @@ export class ClaudingPresence {
     this.clawds = opts.clawds ?? CLAWDS
     this.stateText = opts.stateText ?? 'with Claude'
     this.largeImageText = opts.largeImageText ?? 'Clawd'
-    this.buttonLabel = opts.buttonLabel ?? null
-    this.buttonUrl = opts.buttonUrl ?? 'https://claude.com'
     this.log = opts.log ?? ((m) => console.log(`[${new Date().toLocaleTimeString()}] ${m}`))
     this.onStateChange = opts.onStateChange ?? (() => {})
   }
@@ -147,9 +139,6 @@ export class ClaudingPresence {
 
     const tick = () => {
       const dots = '.'.repeat(this.dotIndex + 1)
-      const buttons = this.buttonLabel
-        ? [{ label: this.buttonLabel, url: this.buttonUrl }]
-        : undefined
 
       this.client?.user
         ?.setActivity({
@@ -158,7 +147,6 @@ export class ClaudingPresence {
           largeImageKey: this.currentClawd ?? undefined,
           largeImageText: this.largeImageText,
           startTimestamp: this.startedAt,
-          buttons,
         })
         .catch((err: Error) => {
           this.log(`setActivity failed: ${err.message}`)

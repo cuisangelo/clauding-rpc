@@ -3,6 +3,12 @@
 All notable changes to the Clauding VSCode extension are documented here.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] — 2026-05-19
+
+### Removed
+
+- The link button on the Discord presence card is gone for good. The `clauding.buttonLabel` and `clauding.buttonUrl` settings no longer exist. The presence shows just the verb, state text, large image, and timer — no extra link.
+
 ## [0.3.0] — 2026-05-19
 
 ### Added

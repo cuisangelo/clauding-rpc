@@ -50,8 +50,6 @@ That's it. No Discord Developer account, no asset uploading, no config required.
 | `clauding.frameMs` | `10000` | Milliseconds between dot frames. Discord rate-limits to ~5 updates per 20s — keep ≥ 5 000. |
 | `clauding.dotFrames` | `3` | Dots per verb before rotating to the next verb + Clawd. |
 | `clauding.stateText` | `with Claude` | Text shown below the verb. |
-| `clauding.buttonLabel` | `""` | Label for a link button on the presence card. Empty means no button (default). |
-| `clauding.buttonUrl` | `https://claude.com` | URL the link button opens (only used when a label is set). |
 
 Changes to settings restart the presence automatically — no reload needed.
 

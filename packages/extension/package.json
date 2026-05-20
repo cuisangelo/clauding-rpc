@@ -1,7 +1,7 @@
 {
   "name": "clauding",
   "displayName": "Clauding",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Discord Rich Presence with Claude Code spinner verbs and Clawd rotation — only active while VSCode/Cursor is open. Unofficial, fan-made; not affiliated with Anthropic.",
   "publisher": "cuisangelo",
@@ -61,16 +61,6 @@
           "type": "string",
           "default": "with Claude",
           "description": "Text shown below the verb in the Discord presence card."
-        },
-        "clauding.buttonLabel": {
-          "type": "string",
-          "default": "",
-          "description": "Label for the link button on the presence card. Leave empty to hide the button (default)."
-        },
-        "clauding.buttonUrl": {
-          "type": "string",
-          "default": "https://claude.com",
-          "description": "URL that the link button opens."
         }
       }
     }

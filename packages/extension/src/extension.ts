@@ -30,14 +30,11 @@ function readOptions(): PresenceOptions | null {
   const clientId = cfg.get<string>('discordClientId', '').trim()
   if (!clientId) return null
 
-  const buttonLabel = cfg.get<string>('buttonLabel', '').trim()
   return {
     clientId,
     frameMs: cfg.get<number>('frameMs', 10_000),
     dotFrames: cfg.get<number>('dotFrames', 3),
     stateText: cfg.get<string>('stateText', 'with Claude'),
-    buttonLabel: buttonLabel.length > 0 ? buttonLabel : null,
-    buttonUrl: cfg.get<string>('buttonUrl', 'https://claude.com'),
     log,
   }
 }

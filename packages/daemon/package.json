@@ -1,6 +1,6 @@
 {
   "name": "@clauding/daemon",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Standalone Clauding Discord Rich Presence daemon",
   "license": "MIT",
