@@ -1,0 +1,25 @@
+{
+  "name": "@clauding/daemon",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Standalone Clauding Discord Rich Presence daemon",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "clauding-daemon": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@clauding/core": "workspace:*",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.6.0"
+  }
+}

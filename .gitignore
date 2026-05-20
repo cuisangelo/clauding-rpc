@@ -6,3 +6,9 @@ launchd.err.log
 .DS_Store
 __pycache__/
 *.pyc
+# Build artifacts
+packages/*/dist/
+*.tsbuildinfo
+# Extension packaging
+packages/extension/*.vsix
+packages/extension/LICENSE

@@ -17,41 +17,65 @@
 ## ✨ Características
 
 - **1 942 verbos** del [proyecto comunitario de spinner verbs de Claude Code](https://github.com/wynandw87/claude-code-spinner-verbs).
-- **14 Clawds** procesados desde los [stickers oficiales de Stickermule](https://www.stickermule.com/claudecode) — sin fondo, sin borde de sticker, sin pixels blancos sueltos, 1024 × 1024 PNG transparente.
-- **Animación de dots**: cada 10 s el spinner crece `Verbo.` → `Verbo..` → `Verbo...`
-- **Cambio de verbo + Clawd**: cada 30 s, sin repetir el anterior.
-- **Auto-reconnect**: detecta cuando Discord abre o cierra; cuando está cerrado pasa a idle (≈ 0 % CPU) y reconecta solo al volver.
-- **Bundle macOS opcional**: aparece como **"Clauding"** con el ícono de Claude en *Login Items*, no como `node` con ícono genérico.
+- **14 Clawds** procesados desde los [stickers oficiales de Stickermule](https://www.stickermule.com/claudecode) — sin fondo, sin borde, 1024 × 1024 PNG transparente.
+- **Animación de dots** cada 10 s (`Verbo.` → `Verbo..` → `Verbo...`) + cambio de verbo + Clawd cada 30 s.
+- **Auto-reconnect** cuando Discord abre/cierra.
+- **Dos modos de uso**:
+  - 🌐 **Daemon** — corre todo el tiempo en macOS (con o sin VSCode/Cursor abierto).
+  - 🧩 **Extensión VSCode/Cursor** — sólo activo cuando el editor está abierto.
+
+---
+
+## 📁 Estructura del monorepo
+
+Usa [pnpm workspaces](https://pnpm.io/workspaces):
+
+```
+clauding/
+├── packages/
+│   ├── core/          # @clauding/core — lógica compartida (verbs, CLAWDS, ClaudingPresence class)
+│   ├── daemon/        # @clauding/daemon — Node CLI standalone
+│   └── extension/     # clauding (VSCode extension) — activate/deactivate
+├── assets/
+│   └── stickers/
+│       ├── originals/ # stickers crudos de Stickermule
+│       └── processed/ # PNGs 1024×1024 transparentes listos para Discord
+├── scripts/
+│   └── process_stickers.py
+├── Clauding.app/      # wrapper macOS para Login Items
+└── launchd/           # template del LaunchAgent
+```
 
 ---
 
 ## 📋 Requisitos
 
-- macOS (probado en Apple Silicon)
 - [Node.js](https://nodejs.org) 18+
-- [pnpm](https://pnpm.io)
-- Cliente de **Discord desktop** corriendo (la web/PWA no expone IPC)
+- [pnpm](https://pnpm.io) 10+
+- Cliente de **Discord desktop** corriendo (web/PWA no expone IPC)
 - Cuenta de Discord Developer (gratis) para crear la Application
+- Python 3 + [Pillow](https://python-pillow.org) si querés correr el pipeline de procesamiento
 
 ---
 
-## 🚀 Setup
+## 🚀 Setup (común)
 
-### 1. Clonar e instalar
+### 1. Clonar y compilar
 
 ```bash
 git clone https://github.com/cuisangelo/discord-rich-presence.git
 cd discord-rich-presence
 pnpm install
+pnpm build
 ```
 
 ### 2. Crear la Discord Application
 
-1. Abrí <https://discord.com/developers/applications>
-2. **New Application** → nombre: `Clauding` (Discord bloquea "Claude" por marca, "Clauding" funciona y juega con los gerundios)
-3. Aceptar los ToS y crear
-4. Copiá el **Application ID** de la pestaña *General Information*
-5. (Opcional) Subí un icono para que el header diga **"Playing Clauding"** con tu logo
+1. <https://discord.com/developers/applications> → **New Application**
+2. Nombre: `Clauding` (Discord bloquea "Claude" por marca registrada)
+3. Aceptar ToS y crear
+4. Copiá el **Application ID** de *General Information*
+5. (Opcional) Subí un App Icon → aparece como "Playing Clauding" con tu logo
 
 ### 3. Subir los assets a Discord
 
@@ -74,159 +98,178 @@ Andá a **Rich Presence → Art Assets → Add Image(s)** y subí los 14 PNG de 
 | `clawd-skateboard.png` | `clawd-skateboard` |
 | `clawd-wand.png` | `clawd-wand` |
 
-> ⚠️ Discord cachea los assets: tardan **5–10 minutos** en propagarse después de subir. Antes de eso vas a ver imagen rota en la presence.
->
-> ⚠️ Las keys **no se pueden editar** una vez guardadas. Si te equivocás, hay que eliminar y resubir.
+> ⚠️ Los assets tardan **5–10 minutos** en propagar.
+> ⚠️ Las keys **no se pueden editar** una vez subidas.
 
-### 4. Configurar el `.env`
+---
+
+## 🌐 Modo Daemon (macOS)
+
+Corre en background con o sin editor abierto. Auto-detecta apertura/cierre de Discord.
+
+### Configuración
 
 ```bash
 cp .env.example .env
-# editá .env y pegá tu Application ID:
+# editá .env:
 # DISCORD_CLIENT_ID=123456789012345678
 ```
 
-### 5. Probar
+### Probar manualmente
 
 ```bash
-pnpm start
+pnpm daemon
 ```
 
-Con Discord desktop abierto deberías ver `Connected as <tu_username>` y la presence en tu perfil al instante.
+Deberías ver `Connected as <tu_username>` y la presence aparece en tu perfil.
 
-### 6. (Opcional) Autostart en macOS
-
-Para que arranque solo en cada login y desaparezca/idle solo cuando Discord se cierra:
+### Autostart en cada login
 
 ```bash
 cp launchd/com.claude.presence.plist ~/Library/LaunchAgents/
 launchctl load -w ~/Library/LaunchAgents/com.claude.presence.plist
 ```
 
-Para verlo bonito en *System Settings → General → Login Items* (como **Clauding** con ícono de Claude en vez de `node`):
+Para que en *System Settings → Login Items* aparezca como **"Clauding"** con el ícono de Claude en vez de `node` con ícono genérico:
 
 ```bash
-# Firma el binario interno con el ícono de Claude
-swift -e 'import AppKit;
-  let icon = NSImage(contentsOfFile: "Clauding.app/Contents/Resources/icon.icns")!;
-  _ = NSWorkspace.shared.setIcon(icon, forFile: "Clauding.app/Contents/MacOS/Clauding", options: [])'
+swift -e 'import AppKit
+let icon = NSImage(contentsOfFile: "Clauding.app/Contents/Resources/icon.icns")!
+_ = NSWorkspace.shared.setIcon(icon, forFile: "Clauding.app/Contents/MacOS/Clauding", options: [])'
 ```
 
 Comandos útiles:
 
 ```bash
-# Ver logs en vivo
-tail -f launchd.out.log
-
-# Pausar
-launchctl unload ~/Library/LaunchAgents/com.claude.presence.plist
-
-# Reanudar
-launchctl load ~/Library/LaunchAgents/com.claude.presence.plist
+tail -f launchd.out.log                                                  # logs en vivo
+launchctl unload ~/Library/LaunchAgents/com.claude.presence.plist        # pausar
+launchctl load ~/Library/LaunchAgents/com.claude.presence.plist          # reanudar
 ```
 
-> ℹ️ Si estás en Linux usá un service de systemd y si estás en Windows un Task Scheduler — el `src/index.js` es portable, solo el wrapper de autostart cambia.
+> ℹ️ Linux/Windows: el daemon es portable (Node puro), solo el wrapper de autostart cambia (systemd / Task Scheduler).
 
 ---
 
-## 🛠 Cómo funciona
+## 🧩 Modo VSCode / Cursor extension
 
+Sólo activo mientras el editor está abierto. Aprovecha la API de VSCode (settings UI, output channel, commands).
+
+### Instalación local
+
+```bash
+pnpm build
+pnpm extension:package    # genera packages/extension/clauding.vsix
+
+# VSCode
+code --install-extension packages/extension/clauding.vsix
+
+# Cursor (es VSCode fork, mismo .vsix funciona)
+cursor --install-extension packages/extension/clauding.vsix
 ```
-src/index.js
-├── conecta vía IPC a Discord usando @xhayper/discord-rpc
-├── selecciona verbo aleatorio (sin repetir el anterior)
-├── selecciona Clawd aleatorio (sin repetir el anterior)
-├── cada 10 s: aumenta los dots y manda setActivity()
-├── cada 30 s (3 frames): cambia verbo + Clawd
-└── escucha events 'disconnected' / 'close' / setActivity-failure:
-    → para el timer, hace cleanup
-    → poll cada 15 s para detectar Discord de vuelta
-```
 
-### Rate limit de Discord
+### Configurar
 
-Discord RPC permite ~5 updates / 20 s. Por eso los frames son cada 10 s — bajo del límite con margen, y deja tiempo a que la presence propague visualmente.
+1. Abrí *Settings* (`Cmd+,`) → buscá `clauding`
+2. Pegá tu **Discord Application ID** en `Clauding: Discord Client Id`
+3. La presence arranca automáticamente
+
+### Comandos disponibles
+
+- `Clauding: Restart presence` — reconectar manualmente
+- `Clauding: Stop presence` — pausar hasta el próximo restart/reload
+
+### Settings disponibles
+
+| Setting | Default | Descripción |
+|---|---|---|
+| `clauding.discordClientId` | `""` | Tu Discord Application ID |
+| `clauding.frameMs` | `10000` | ms entre frames de dots (mín. 5 000 por rate limit) |
+| `clauding.dotFrames` | `3` | Dots por verbo (1–6) |
+| `clauding.stateText` | `"with Claude"` | Texto debajo del verbo |
+| `clauding.buttonLabel` | `"claude.com"` | Label del botón (vacío para ocultar) |
+| `clauding.buttonUrl` | `"https://claude.com"` | URL del botón |
 
 ---
 
 ## 🎨 Personalización
 
-### Cambiar los verbos
-
-Editá `src/verbs.js`. La lista actual viene del [collection de Wynand](https://github.com/wynandw87/claude-code-spinner-verbs); incluye los 185 defaults oficiales de Claude Code + ~1 757 themed (Vibe Check, Godzilla, Harry Potter, 1960s Hippie, etc.).
-
 ### Agregar nuevos Clawds
 
-1. Conseguí el PNG nuevo y dejalo en `assets/stickers/originals/`
-2. Procesalo:
-   ```bash
-   python3 scripts/process_stickers.py
-   ```
-3. El output queda en `assets/stickers/processed/`
-4. Subilo a Discord Developer Portal con una key (sin extensión, ej. `clawd-mynew`)
-5. Agregalo al array `CLAWDS` en `src/index.js`
-6. Reiniciá:
-   ```bash
-   launchctl unload ~/Library/LaunchAgents/com.claude.presence.plist
-   launchctl load -w ~/Library/LaunchAgents/com.claude.presence.plist
-   ```
+1. Dejá el PNG nuevo en `assets/stickers/originals/`
+2. `pnpm process-stickers` (requiere Python + Pillow)
+3. Subí el resultado de `assets/stickers/processed/` al Discord Developer Portal con una key (sin extensión)
+4. Agregá la key al array `CLAWDS` en `packages/core/src/clawds.ts`
+5. `pnpm build`
+6. Reiniciá el daemon o reload de la extensión
 
-### Ajustar tiempos
+### Cambiar los verbos
 
-En `src/index.js`:
+Editá `packages/core/src/verbs.ts`. Después `pnpm build`.
 
-```js
-const FRAME_MS = 10_000      // ms entre dots; mínimo seguro ≈ 5 000
-const DOT_FRAMES = 3         // dots por verbo (1, 2, 3)
-const RECONNECT_MS = 15_000  // poll de reconexión cuando Discord está cerrado
+### Ajustar tiempos (daemon)
+
+Editá `packages/daemon/src/index.ts` y pasale opciones al constructor de `ClaudingPresence`:
+
+```ts
+const presence = new ClaudingPresence({
+  clientId,
+  frameMs: 8_000,
+  dotFrames: 4,
+  stateText: 'cooking',
+  log,
+})
 ```
+
+### Ajustar tiempos (extension)
+
+Todo configurable desde Settings — sin recompilar.
 
 ---
 
-## 🔧 Pipeline de procesamiento de stickers
+## 🛠 Pipeline de procesamiento de stickers
 
-`scripts/process_stickers.py` (requiere `Pillow`):
+`scripts/process_stickers.py` toma los PNGs de `assets/stickers/originals/` y produce 1024 × 1024 transparentes listos para Discord:
 
-1. **Flood-fill desde el perímetro** por píxeles blancos *o* transparentes — limpia el fondo + borde blanco del sticker en una pasada.
+1. **Flood-fill desde el perímetro** por blanco *o* transparente — limpia fondo + borde de sticker.
 2. **Crop al bounding box** del contenido visible.
-3. **Upscale con NEAREST** si la imagen es < 300 px (preserva la estética pixel-art crujiente).
-4. **Padding** a cuadrado con 5 % de margen + resize a 1024 × 1024 con LANCZOS.
-5. **Alpha-threshold**: pixels con α < 128 → 0, ≥ 128 → 255. Mata el anti-aliasing borroso.
-6. **Anti-ringing**: limpia los pixels oscuros con α bajo que LANCZOS deja en bordes contenido↔transparente.
-7. **White-killer**: cualquier pixel con RGB ≥ 240 muere. Los Clawds no tienen blanco en el diseño; el blanco es siempre borde de sticker o highlight artificial.
-
-El resultado: PNG 1024×1024 transparente listo para Discord Rich Presence.
+3. **Upscale NEAREST** si < 300 px (preserva pixel-art crujiente).
+4. **Padding** a cuadrado + resize a 1024 × 1024 LANCZOS.
+5. **Alpha threshold** (α < 128 → 0, ≥ 128 → 255) — mata anti-aliasing.
+6. **Anti-ringing** — limpia los píxeles oscuros con α bajo que LANCZOS deja en bordes.
+7. **White killer** — cualquier RGB ≥ 240 muere (los Clawds no tienen blanco en el diseño).
 
 ---
 
 ## 🐛 Troubleshooting
 
 **"Connected as ..." pero no veo nada en mi perfil**
-→ Settings → **Activity Privacy** → "Share your detected activities..." tiene que estar ON.
+→ Discord *Settings → Activity Privacy → Share your detected activities* tiene que estar ON.
 
-**Veo imagen rota / placeholder en la presence**
-→ Los assets recién subidos tardan 5–10 min en propagar en el CDN de Discord. Esperá.
+**Veo imagen rota / placeholder**
+→ Los assets recién subidos tardan 5–10 min en propagar en el CDN de Discord.
 
-**El verbo no cambia**
-→ Discord cachea agresivamente. Cerrá y volvé a abrir tu perfil. Si en logs ves `Connected as ...`, el script está mandando los updates bien.
+**El daemon no arranca tras `pnpm install`**
+→ Corré `pnpm build` (los paquetes compilan a `dist/`).
 
 **Login Items muestra "node" con ícono genérico**
-→ Estás apuntando al binario directamente. Usá el bundle `Clauding.app` (ver setup paso 6). Si dice "Clauding" pero sigue con ícono `exec`: toggle off → on en *Login Items*, eso fuerza a `backgroundtaskmanagementd` a soltar la caché.
+→ Estás apuntando al binario directo. Usá el bundle `Clauding.app` y aplicá el comando Swift de la sección de autostart.
 
 **iPhone Screen Time muestra `com.claude.presence` con ícono blanco**
-→ Limitación de Apple. Screen Time pintea el icono solo cuando hay match exacto de bundle ID en el App Store de iOS. Como Clauding no existe en iOS, no hay manera. Apple ni siquiera lo arregló para su propio `com.apple.Terminal`. Resignate.
+→ Limitación de Apple — Screen Time pinta icono solo cuando hay match exacto de bundle ID en el App Store iOS. Sin solución de usuario.
 
 ---
 
 ## 📦 Stack
 
+- TypeScript en los 3 packages
 - [`@xhayper/discord-rpc`](https://github.com/xhayper/discord-rpc) — cliente IPC mantenido del Rich Presence
-- [`dotenv`](https://github.com/motdotla/dotenv) — env vars
-- Python + [Pillow](https://python-pillow.org) — pipeline de procesamiento
-- Swift inline + AppKit — set custom icon en el binario del bundle macOS
+- [`dotenv`](https://github.com/motdotla/dotenv) — env vars del daemon
+- [`@vscode/vsce`](https://github.com/microsoft/vscode-vsce) + [`esbuild`](https://esbuild.github.io) — bundling y packaging de la extensión
+- Python + [Pillow](https://python-pillow.org) — pipeline de procesamiento de stickers
+- Swift + AppKit — set custom icon en el binario del bundle macOS
 
 ---
 
 ## 📜 Licencia
 
-MIT. El logo y los stickers de Clawd son propiedad de [Anthropic](https://www.anthropic.com); úsalos solo para uso personal o no comercial.
+MIT. Ver [`LICENSE`](LICENSE). El logo, los stickers de Clawd y la marca Claude son propiedad de [Anthropic](https://www.anthropic.com); usá los assets sólo para uso personal o no comercial.
