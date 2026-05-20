@@ -2,6 +2,17 @@ import { Client } from '@xhayper/discord-rpc'
 import { VERBS } from './verbs.js'
 import { CLAWDS } from './clawds.js'
 
+/**
+ * High-level lifecycle state of the presence, emitted via the
+ * `onStateChange` callback. Useful for driving a status-bar UI.
+ *
+ * - `connecting` — attempting to reach the Discord IPC socket.
+ * - `connected`  — RPC ready, activity loop running.
+ * - `idle`       — Discord is closed (or RPC dropped); polling for it to reappear.
+ * - `stopped`    — `stop()` was called; will not reconnect until `start()`.
+ */
+export type PresenceState = 'connecting' | 'connected' | 'idle' | 'stopped'
+
 export interface PresenceOptions {
   /** Discord Application ID (Client ID). */
   clientId: string
@@ -19,12 +30,14 @@ export interface PresenceOptions {
   stateText?: string
   /** Tooltip for the large image. Defaults to "Clawd". */
   largeImageText?: string
-  /** Button label. Defaults to "claude.com". Set to null to hide. */
+  /** Button label. Defaults to `null` (no button). Set a string to show one. */
   buttonLabel?: string | null
-  /** Button URL. Defaults to "https://claude.com". */
+  /** Button URL. Only used when buttonLabel is set. */
   buttonUrl?: string
   /** Logger. Defaults to console.log with timestamp prefix. */
   log?: (msg: string) => void
+  /** Called whenever the lifecycle state changes. Useful for status-bar UIs. */
+  onStateChange?: (state: PresenceState) => void
 }
 
 /**
@@ -47,7 +60,9 @@ export class ClaudingPresence {
   private readonly buttonLabel: string | null
   private readonly buttonUrl: string
   private readonly log: (msg: string) => void
+  private readonly onStateChange: (state: PresenceState) => void
 
+  private state: PresenceState = 'stopped'
   private client: Client | null = null
   private activityTimer: ReturnType<typeof setInterval> | null = null
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null
@@ -70,9 +85,24 @@ export class ClaudingPresence {
     this.clawds = opts.clawds ?? CLAWDS
     this.stateText = opts.stateText ?? 'with Claude'
     this.largeImageText = opts.largeImageText ?? 'Clawd'
-    this.buttonLabel = opts.buttonLabel === undefined ? 'claude.com' : opts.buttonLabel
+    this.buttonLabel = opts.buttonLabel ?? null
     this.buttonUrl = opts.buttonUrl ?? 'https://claude.com'
     this.log = opts.log ?? ((m) => console.log(`[${new Date().toLocaleTimeString()}] ${m}`))
+    this.onStateChange = opts.onStateChange ?? (() => {})
+  }
+
+  getState(): PresenceState {
+    return this.state
+  }
+
+  private setState(state: PresenceState): void {
+    if (this.state === state) return
+    this.state = state
+    try {
+      this.onStateChange(state)
+    } catch (err) {
+      this.log(`onStateChange threw: ${err instanceof Error ? err.message : String(err)}`)
+    }
   }
 
   async start(): Promise<void> {
@@ -88,6 +118,7 @@ export class ClaudingPresence {
     }
     this.stopActivity()
     await this.cleanupClient()
+    this.setState('stopped')
   }
 
   private pickVerb(): string {
@@ -159,7 +190,10 @@ export class ClaudingPresence {
     this.log('Discord disconnected. Going idle…')
     this.stopActivity()
     void this.cleanupClient()
-    if (!this.stopped) this.scheduleReconnect()
+    if (!this.stopped) {
+      this.setState('idle')
+      this.scheduleReconnect()
+    }
   }
 
   private async cleanupClient(): Promise<void> {
@@ -183,12 +217,14 @@ export class ClaudingPresence {
   private async connect(): Promise<void> {
     if (this.stopped) return
     await this.cleanupClient()
+    this.setState('connecting')
     const client = new Client({ clientId: this.clientId })
     this.client = client
 
     client.on('ready', () => {
       this.connected = true
       this.log(`Connected as ${client.user?.username ?? '<unknown>'}`)
+      this.setState('connected')
       this.startActivity()
     })
     client.on('disconnected', this.handleDisconnect)
@@ -201,6 +237,7 @@ export class ClaudingPresence {
       const msg = err instanceof Error ? err.message : String(err)
       this.log(`Discord not available (${msg}). Retrying in ${this.reconnectMs / 1000}s.`)
       await this.cleanupClient()
+      this.setState('idle')
       this.scheduleReconnect()
     }
   }

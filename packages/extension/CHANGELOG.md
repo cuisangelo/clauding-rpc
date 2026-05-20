@@ -3,6 +3,18 @@
 All notable changes to the Clauding VSCode extension are documented here.
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] — 2026-05-19
+
+### Added
+
+- **Status bar item** showing the current connection state (active / connecting / idle / paused). Click it to toggle Clauding on/off.
+- **`Clauding: Toggle on/off`** command (bound to the status bar item click).
+- The enabled/disabled state is now persisted per-user via `globalState`, so toggling off survives editor reloads.
+
+### Changed
+
+- The Discord presence link button is now **hidden by default**. Set `clauding.buttonLabel` (and optionally `clauding.buttonUrl`) in Settings to show one.
+
 ## [0.2.0] — 2026-05-19
 
 ### Added

@@ -24,6 +24,7 @@ Discord Rich Presence with Claude Code-style spinner verbs and **Clawd** (the Cl
 - **Verb + Clawd rotation** every 30 seconds, no consecutive repeats.
 - **Auto-reconnect** when Discord opens or closes — the extension idles cleanly when Discord isn't around.
 - **Zero configuration** — ships with a shared Discord Application that already has all 14 Clawds uploaded. Install → reload → working.
+- **Status bar toggle** — a small `Clauding` item appears in the editor status bar showing the current connection state. Click it to pause / resume.
 - Works in **Cursor** too (it's a VSCode fork).
 
 ## Setup
@@ -37,8 +38,9 @@ That's it. No Discord Developer account, no asset uploading, no config required.
 
 ## Commands
 
-- `Clauding: Restart presence` — reconnect manually.
-- `Clauding: Stop presence` — pause until you restart or reload.
+- `Clauding: Toggle on/off` — same as clicking the status bar item. Pauses and persists the off state across reloads.
+- `Clauding: Restart presence` — reconnect manually (also re-enables if paused).
+- `Clauding: Stop presence` — pause until you toggle/restart.
 
 ## Settings
 
@@ -48,8 +50,8 @@ That's it. No Discord Developer account, no asset uploading, no config required.
 | `clauding.frameMs` | `10000` | Milliseconds between dot frames. Discord rate-limits to ~5 updates per 20s — keep ≥ 5 000. |
 | `clauding.dotFrames` | `3` | Dots per verb before rotating to the next verb + Clawd. |
 | `clauding.stateText` | `with Claude` | Text shown below the verb. |
-| `clauding.buttonLabel` | `claude.com` | Link button label. Leave empty to hide the button. |
-| `clauding.buttonUrl` | `https://claude.com` | URL the link button opens. |
+| `clauding.buttonLabel` | `""` | Label for a link button on the presence card. Empty means no button (default). |
+| `clauding.buttonUrl` | `https://claude.com` | URL the link button opens (only used when a label is set). |
 
 Changes to settings restart the presence automatically — no reload needed.
 

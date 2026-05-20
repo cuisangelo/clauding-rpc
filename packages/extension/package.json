@@ -1,7 +1,7 @@
 {
   "name": "clauding",
   "displayName": "Clauding",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Discord Rich Presence with Claude Code spinner verbs and Clawd rotation — only active while VSCode/Cursor is open. Unofficial, fan-made; not affiliated with Anthropic.",
   "publisher": "cuisangelo",
@@ -15,7 +15,7 @@
   "homepage": "https://github.com/cuisangelo/clauding-rpc#readme",
   "bugs": "https://github.com/cuisangelo/clauding-rpc/issues",
   "categories": ["Other"],
-  "keywords": ["discord", "rich presence", "claude", "clawd", "presence"],
+  "keywords": ["discord", "rich presence", "clauding", "presence", "spinner"],
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -23,6 +23,10 @@
   "activationEvents": ["onStartupFinished"],
   "contributes": {
     "commands": [
+      {
+        "command": "clauding.toggle",
+        "title": "Clauding: Toggle on/off"
+      },
       {
         "command": "clauding.restart",
         "title": "Clauding: Restart presence"
@@ -60,8 +64,8 @@
         },
         "clauding.buttonLabel": {
           "type": "string",
-          "default": "claude.com",
-          "description": "Label for the link button. Leave empty to hide the button."
+          "default": "",
+          "description": "Label for the link button on the presence card. Leave empty to hide the button (default)."
         },
         "clauding.buttonUrl": {
           "type": "string",
