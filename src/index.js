@@ -19,11 +19,15 @@ const log = (msg) => console.log(`[${ts()}] ${msg}`)
 // Discord Developer Portal → Rich Presence → Art Assets.
 const CLAWDS = [
   'clawd',
+  'clawd-book',
+  'clawd-bubble',
+  'clawd-cape',
   'clawd-coffee',
   'clawd-dizzy',
   'clawd-happy',
   'clawd-headphones',
   'clawd-heart',
+  'clawd-kite',
   'clawd-lightbulb',
   'clawd-magnifier',
   'clawd-skateboard',

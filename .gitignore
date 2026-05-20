@@ -4,3 +4,5 @@ node_modules/
 launchd.out.log
 launchd.err.log
 .DS_Store
+__pycache__/
+*.pyc

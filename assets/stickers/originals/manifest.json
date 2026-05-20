@@ -178,5 +178,55 @@
     "width": 600,
     "height": 542,
     "bytes": 39888
+  },
+  {
+    "file": "manifesting-glitter.png",
+    "name": "Manifesting",
+    "product": "Glitter stickers",
+    "uuid": "15c2280e-7a5f-46d8-ba05-86073c9d0b09",
+    "variant": "original",
+    "width": 407,
+    "height": 49,
+    "bytes": 5921
+  },
+  {
+    "file": "clawd-book.png",
+    "name": "Clawd Book",
+    "product": "Die cut stickers",
+    "uuid": "9d8d9dac-a077-4ad3-b60b-969b18dfa8a3",
+    "variant": "large",
+    "width": 600,
+    "height": 429,
+    "bytes": 28656
+  },
+  {
+    "file": "clawd-bubble.png",
+    "name": "Clawd Bubble",
+    "product": "Die cut stickers",
+    "uuid": "15cfce1b-f09f-46c4-9b1c-6da9d0d157d6",
+    "variant": "large",
+    "width": 600,
+    "height": 440,
+    "bytes": 34649
+  },
+  {
+    "file": "clawd-cape.png",
+    "name": "Clawd Cape",
+    "product": "Die cut stickers",
+    "uuid": "7046cd5f-a1e1-466c-a211-7b49671d23ab",
+    "variant": "large",
+    "width": 518,
+    "height": 600,
+    "bytes": 33539
+  },
+  {
+    "file": "clawd-kite.png",
+    "name": "Clawd Kite",
+    "product": "Die cut stickers",
+    "uuid": "3f521137-f17f-4119-9039-91e433c269c4",
+    "variant": "large",
+    "width": 600,
+    "height": 569,
+    "bytes": 49621
   }
 ]
