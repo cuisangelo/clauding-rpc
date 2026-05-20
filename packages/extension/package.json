@@ -37,8 +37,8 @@
       "properties": {
         "clauding.discordClientId": {
           "type": "string",
-          "default": "",
-          "description": "Your Discord Application ID. Create one at https://discord.com/developers/applications."
+          "default": "1506350478714208378",
+          "description": "Discord Application ID. Defaults to the shared Clauding app (with all 14 Clawds pre-uploaded). Override with your own only if you want full control over the assets and stats."
         },
         "clauding.frameMs": {
           "type": "number",

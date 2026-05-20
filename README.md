@@ -58,9 +58,28 @@ clauding/
 
 ---
 
-## 🚀 Setup (común)
+## 🚀 Setup
 
-### 1. Clonar y compilar
+### Modo extension (recomendado para la mayoría)
+
+**Cero configuración** — la extension trae bakeada una Discord Application compartida (`Clauding`) con los 14 Clawds ya subidos. Sólo instalá:
+
+```bash
+# si tenés el .vsix ya buildeado
+code --install-extension packages/extension/clauding.vsix
+# o
+cursor --install-extension packages/extension/clauding.vsix
+```
+
+Después: **Reload Window** (`Cmd+Shift+P` → "Developer: Reload Window") y la presence arranca sola con Discord desktop abierto. **No tenés que crear ninguna app en Discord ni subir assets.**
+
+¿Querés tu propia Discord App (custom branding, stats privadas)? Override en *Settings* → `clauding.discordClientId` con tu Application ID — entonces sí necesitás los pasos de abajo.
+
+### Modo daemon o setup desde cero
+
+Si vas por el daemon standalone, o querés usar tu propia Discord App con la extension:
+
+#### 1. Clonar y compilar
 
 ```bash
 git clone https://github.com/cuisangelo/discord-rich-presence.git
@@ -69,7 +88,7 @@ pnpm install
 pnpm build
 ```
 
-### 2. Crear la Discord Application
+#### 2. Crear la Discord Application
 
 1. <https://discord.com/developers/applications> → **New Application**
 2. Nombre: `Clauding` (Discord bloquea "Claude" por marca registrada)
@@ -77,7 +96,7 @@ pnpm build
 4. Copiá el **Application ID** de *General Information*
 5. (Opcional) Subí un App Icon → aparece como "Playing Clauding" con tu logo
 
-### 3. Subir los assets a Discord
+#### 3. Subir los assets a Discord
 
 Andá a **Rich Presence → Art Assets → Add Image(s)** y subí los 14 PNG de `assets/stickers/processed/` con estas keys (case-sensitive, con guión medio):
 
@@ -152,7 +171,7 @@ launchctl load ~/Library/LaunchAgents/com.claude.presence.plist          # reanu
 
 ## 🧩 Modo VSCode / Cursor extension
 
-Sólo activo mientras el editor está abierto. Aprovecha la API de VSCode (settings UI, output channel, commands).
+Sólo activo mientras el editor está abierto. Trae bakeada la Discord App compartida, así que **funciona sin config**. Aprovecha la API de VSCode (settings UI, output channel, commands).
 
 ### Instalación local
 
@@ -167,11 +186,16 @@ code --install-extension packages/extension/clauding.vsix
 cursor --install-extension packages/extension/clauding.vsix
 ```
 
-### Configurar
+Después: `Cmd+Shift+P` → "Developer: Reload Window".
 
-1. Abrí *Settings* (`Cmd+,`) → buscá `clauding`
-2. Pegá tu **Discord Application ID** en `Clauding: Discord Client Id`
-3. La presence arranca automáticamente
+### Override opcional con tu propia Discord App
+
+Por default usa la app `Clauding` compartida (ID `1506350478714208378`, con los 14 Clawds ya subidos). Si querés tu propia:
+
+1. Seguí "Setup desde cero" arriba para crear tu Discord App + subir los 14 assets
+2. *Settings* (`Cmd+,`) → buscá `clauding`
+3. Pegá tu **Application ID** en `Clauding: Discord Client Id`
+4. Reload Window
 
 ### Comandos disponibles
 

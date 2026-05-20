@@ -8,7 +8,7 @@
     "build": "pnpm -r build",
     "daemon": "pnpm --filter @clauding/daemon start",
     "daemon:dev": "pnpm --filter @clauding/daemon dev",
-    "extension:package": "pnpm --filter @clauding/extension package",
+    "extension:package": "pnpm --filter clauding package",
     "process-stickers": "python3 scripts/process_stickers.py"
   },
   "engines": {
